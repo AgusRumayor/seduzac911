@@ -1,11 +1,7 @@
 from dbfread import DBF
-import pyorient
 import re
 import datetime
-
-client = pyorient.OrientDB("localhost", 2424)
-session_id = client.connect("root", "AFRB.u13")
-client.db_open("seduzac_test" , "admin", "admin" )
+from .. import config
 
 query = client.query("SELECT FROM Plantel")
 
@@ -94,7 +90,7 @@ for record in records:
 	rid_plantel = client.command(q)[0]._rid
 	print rid_plantel
 	q='CREATE VERTEX Resultados911 CONTENT {'
-	for field in fields:
+	for field in fields[1320:]:
 		value = record[field]
 		#print value
 		#print type(value)
