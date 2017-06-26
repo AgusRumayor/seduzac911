@@ -1,10 +1,8 @@
 from dbfread import DBF
-import pyorient
 import re
+import config
 
-client = pyorient.OrientDB("localhost", 2424)
-session_id = client.connect("root", "AFRB.u13")
-client.db_open("seduzac_test" , "admin", "admin" )
+client = config.client
 
 query = client.query("SELECT FROM Plantel")
 
