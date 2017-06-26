@@ -100,3 +100,6 @@ ENV/
 
 # original db
 *.dbf
+
+#db connection
+config.py

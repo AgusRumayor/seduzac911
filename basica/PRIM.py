@@ -1,8 +1,9 @@
 from dbfread import DBF
 import re
 import datetime
-from .. import config
+import config
 
+client = config.client
 query = client.query("SELECT FROM Plantel")
 
 #for result in query:
