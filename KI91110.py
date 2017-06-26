@@ -54,6 +54,14 @@ for record in table.records:
 			rid_responsable_prog= client.command(q)[0]._rid
 		else:
 			rid_responsable_prog= responsable_bd[0]._rid
+	if record['resp_cap'] != "":
+                q='SELECT FROM Empleado WHERE nombre = "%s"'%record['resp_cap']
+                responsable_cap_bd = client.query(q,1)
+                if len(responsable_cap_bd) == 0:
+                        q = 'CREATE VERTEX Empleado CONTENT {"nombre":"%s"}'%record['resp_cap']
+                        rid_responsable_cap= client.command(q)[0]._rid
+                else:
+                        rid_responsable_cap= responsable_cap_bd[0]._rid
 	if record['NOMDIREC'] != "":
                 q='SELECT FROM Empleado WHERE nombre = "%s"'%record['NOMDIREC']
                 responsable_bd = client.query(q,1)
@@ -148,4 +156,6 @@ for record in table.records:
 	if rid_911:
                 q= 'CREATE EDGE Resultado FROM %s TO %s'%(rid_institucion, rid_911)
                 client.command(q)
-
+	if rid_responsable_cap:
+                q= 'CREATE EDGE Responsable FROM %s TO %s'%(rid_responsable_cap, rid_911)
+                client.command(q)

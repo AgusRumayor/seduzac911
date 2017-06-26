@@ -6,13 +6,13 @@ client = pyorient.OrientDB("localhost", 2424)
 session_id = client.connect("root", "AFRB.u13")
 client.db_open("seduzac_test" , "admin", "admin" )
 
-query = client.query("SELECT FROM Plantel")
+query = client.query("SELECT FROM Carrera")
 
 #for result in query:
 #	print result
  
-table = DBF('KI9119.dbf', load=True, encoding="latin-1")
-#print table.field_names
+table = DBF('KI9119A.dbf', load=True, encoding="latin-1")
+print table.field_names
 r = re.compile("S\d")
 fields = filter(r.match, table.field_names)
 #print fields
@@ -23,30 +23,38 @@ fields = filter(r.match, table.field_names)
 #client.command("TRUNCATE CLASS Direccion UNSAFE")
 #client.command("TRUNCATE CLASS Resultados911 UNSAFE")
 #DELETING ALL RECORDS
-info_general = ['CLAVECCT', 'NOMBREESC', 'ESTATUS', 'MAT_2015', 'DOCEN_2015']
+info_general = ['CARRERA', 'NOMBRECAR', 'NOMCARSINA', 'MODALIDAD', 'NOMMOD', 'PLAN_EST', 'DURACION', 'ESTRUCT', 'ESTATUS', 'MAT_2015', 'TIPO_SUB', 'SUBSISTEMA', 'NORMAL', 'NIVEL']
+plantel = ['CLAVECCT', 'NOMBREESC']
 institucion = ['CLAVEINSTI', 'NOMINSTI']
 ubicacion = ['DOMICILIO', 'ENTRE_CAL', 'Y_CALLE', 'COLONIA', 'CODPOST', 'MUNICIPIO', 'NOMBREMUN', 'LOCALIDAD', 'NOMBRELOC']
 contacto =['LADA', 'TELEFONO', 'TEL_EXT', 'FAX', 'FAX_EXT', 'CORREO', 'PAGINA_WEB']
 sostenimiento = ['SOSTENIMIE', 'NOMBRESOS']
 dependencia_normativa = ['DEPNORMTVA', 'NOMBREDEP']
 servicio=['SERVICIO', 'NOMBRESER']
-director=['DIRECTOR']
 responsable_llenado=['resp_cap']
 responsable_prog=['resp_prog']
 control=['CONTROL']
 resultados911=['observ', 'fecha', 'CAPTURA']
-renombres = {'CLAVEINSTI':'clave_institucion','NOMINSTI':'nombre_institucion', 'CLAVECCT':'clave', 'NOMBREESC':'nombre', 
-'ESTATUS':'estatus', 'MAT_2015':'MAT_2015', 'DOCEN_2015':'DOCEN_2015',
+renombres = {'CARRERA':'clave', 'NOMBRECAR':'nombre', 'CLAVEINSTI':'clave_institucion','NOMINSTI':'nombre_institucion', 'CLAVECCT':'clave_plantel',
+ 'NOMBREESC':'nombre_plantel', 'ESTATUS':'estatus', 'MAT_2015':'MAT_2015', 'DOCEN_2015':'DOCEN_2015',
 'DOMICILIO':'domicilio', 'ENTRE_CAL':'entre_calle', 'Y_CALLE':'y_calle', 'COLONIA':'colonia', 'CODPOST':'CP', 'MUNICIPIO':'municipio', 
 'NOMBREMUN':'nombre_municipio', 'LOCALIDAD':'localidad', 'NOMBRELOC':'nombre_localidad', 'LADA':'lada', 'TELEFONO':'telefono',
  'TEL_EXT':'telefono_extension', 'FAX':'fax', 'FAX_EXT':'fax_extension', 'CORREO':'correo', 'PAGINA_WEB':'pagina_web',
 'SOSTENIMIE':'sostenimiento', 'NOMBRESOS':'nombre', 'DEPNORMTVA':'dependencia_normativa', 'NOMBREDEP':'nombre', 'SERVICIO':'servicio',
- 'NOMBRESER':'nombre', 'DIRECTOR':'direccion', 'resp_cap':'responsable_captura', 'resp_prog':'responsable_programa', 'CONTROL':'control',
-'observ':'observaciones', 'fecha':'fecha', 'CAPTURA':'captura'}
+ 'NOMBRESER':'nombre', 'NIVEL':'nivel', 'resp_cap':'responsable_captura', 'resp_prog':'responsable_programa', 'CONTROL':'control',
+'observ':'observaciones', 'fecha':'fecha', 'CAPTURA':'captura', 'NORMAL':'normal', 'NOMCARSINA':'nomcarsina', 'MODALIDAD':'modalidad',
+ 'NOMMOD':'nombre_modalidad', 'PLAN_EST':'plan_estudios', 'DURACION':'duracion', 'ESTRUCT':'estructura', 'TIPO_SUB':'tipo_subsistema', 'SUBSISTEMA':'subsistema'}
 print len(table.field_names)
-print len(institucion+info_general+ubicacion+contacto+sostenimiento+dependencia_normativa+servicio+director+responsable_llenado+responsable_prog+control+resultados911)
+print len(plantel+institucion+info_general+ubicacion+contacto+sostenimiento+dependencia_normativa+servicio+responsable_llenado+responsable_prog+control+resultados911)
 print len(fields)
 for record in table.records:
+	if record['CLAVECCT'] != "":
+                q='SELECT FROM Plantel WHERE clave = "%s"'%record['CLAVECCT']
+                plantel_bd = client.query(q,1)
+                if len(plantel_bd) == 0:
+                        print "Carrera sin plantel"
+                else:
+                        rid_plantel= plantel_bd[0]._rid
 	if record['CLAVEINSTI'] != "":
                 q='SELECT FROM Institucion WHERE clave = "%s"'%record['CLAVEINSTI']
                 institucion_bd = client.query(q,1)
@@ -70,15 +78,7 @@ for record in table.records:
                         rid_responsable_cap= client.command(q)[0]._rid
                 else:
                         rid_responsable_cap= responsable_cap_bd[0]._rid
-	if record['DIRECTOR'] != "":
-                q='SELECT FROM Empleado WHERE nombre = "%s"'%record['DIRECTOR']
-                responsable_bd = client.query(q,1)
-                if len(responsable_bd) == 0:
-                        q = 'CREATE VERTEX Empleado CONTENT {"nombre":"%s"}'%record['DIRECTOR']
-                        rid_direccion= client.command(q)[0]._rid
-                else:
-                        rid_direccion= responsable_bd[0]._rid
-	q='CREATE VERTEX Plantel CONTENT {'
+	q='CREATE VERTEX Carrera CONTENT {'
 	#Informacion general
 	for field in info_general:
 		value = record[field]
@@ -134,13 +134,12 @@ for record in table.records:
         q=q[:-1]
         q=q+'}'
 	q=q+'}'
-	rid_plantel = client.command(q)[0]._rid
+	rid_carrera = client.command(q)[0]._rid
 	q='CREATE VERTEX Resultados911 CONTENT {'
 	for field in fields:
 		value = record[field]
                 if type(value) == unicode:
                         value = value.replace('"', '\\"')
-			print value
                 	q=q+'"%s":"%s",'%(field, value)
 		else:
 			q=q+'"%s":%i,'%(field, value)
@@ -156,18 +155,15 @@ for record in table.records:
 	#print q
 	rid_911 = client.command(q)[0]._rid
 	if rid_responsable_prog:
-		q= 'CREATE EDGE Responsable FROM %s TO %s'%(rid_responsable_prog, rid_plantel)
+		q= 'CREATE EDGE Responsable FROM %s TO %s'%(rid_responsable_prog, rid_carrera)
 		client.command(q)
-	if rid_direccion:
-                q= 'CREATE EDGE Direccion FROM %s TO %s'%(rid_direccion, rid_plantel)
-                client.command(q)
-	if rid_911:
-                q= 'CREATE EDGE Resultado FROM %s TO %s'%(rid_plantel, rid_911)
-                client.command(q)
-	if rid_institucion:
-                q= 'CREATE EDGE Pertenece_a FROM %s TO %s'%(rid_plantel, rid_institucion)
-                client.command(q)
 	if rid_responsable_cap:
                 q= 'CREATE EDGE Responsable FROM %s TO %s'%(rid_responsable_cap, rid_911)
+                client.command(q)
+	if rid_911:
+                q= 'CREATE EDGE Resultado FROM %s TO %s'%(rid_carrera, rid_911)
+                client.command(q)
+	if rid_plantel:
+                q= 'CREATE EDGE Ofrece FROM %s TO %s'%(rid_plantel, rid_carrera)
                 client.command(q)
 
