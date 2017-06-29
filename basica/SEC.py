@@ -4,7 +4,8 @@ import datetime
 import config
 
 client = config.client
-table = DBF('PRIMCI16.dbf', load=True, encoding="latin-1")
+nivel = "secundaria"
+table = DBF('SECCI16.dbf', load=True, encoding="latin-1")
 #print table.field_names
 #print table.records[0]
 r = re.compile("V\d")
@@ -31,6 +32,7 @@ print len(table.records)
 #exit(0)
 for record in records:
 	q='CREATE VERTEX Plantel CONTENT {'
+	q=q+'"nivel":"'+nivel+'",'
 	#Informacion general
 	for field in info_general:
 		value = record[field]
