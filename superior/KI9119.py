@@ -3,24 +3,12 @@ import re
 import config
 
 client = config.client
-
-query = client.query("SELECT FROM Plantel")
-
-#for result in query:
-#	print result
- 
+nivel = "superior"
 table = DBF('KI9119.dbf', load=True, encoding="latin-1")
 #print table.field_names
 r = re.compile("S\d")
 fields = filter(r.match, table.field_names)
 #print fields
-#DELETING ALL RECORDS
-#client.command("TRUNCATE CLASS Institucion UNSAFE")
-#client.command("TRUNCATE CLASS Empleado UNSAFE")
-#client.command("TRUNCATE CLASS Responsable UNSAFE")
-#client.command("TRUNCATE CLASS Direccion UNSAFE")
-#client.command("TRUNCATE CLASS Resultados911 UNSAFE")
-#DELETING ALL RECORDS
 info_general = ['CLAVECCT', 'NOMBREESC', 'ESTATUS', 'MAT_2015', 'DOCEN_2015']
 institucion = ['CLAVEINSTI', 'NOMINSTI']
 ubicacion = ['DOMICILIO', 'ENTRE_CAL', 'Y_CALLE', 'COLONIA', 'CODPOST', 'MUNICIPIO', 'NOMBREMUN', 'LOCALIDAD', 'NOMBRELOC']
