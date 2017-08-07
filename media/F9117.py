@@ -4,7 +4,8 @@ import datetime
 import config
 
 client = config.client
-nivel = "media"
+nivel = ["media"]
+subnivel = []
 table = DBF('F9117.dbf', load=True, encoding="latin-1")
 #print table.field_names
 #print table.records[0]
@@ -23,7 +24,7 @@ control = ['CONTROL', 'SUBCONTROL']
 renombres = {u'PLANTEL':'clave', u'NOMPLANTEL':'nombre', u'TURNO':'turno', u'ENTIDAD':'entidad', u'NOMENTIDAD':'nombre_entidad', 
 u'MUNICIPIO':'municipio', u'NOMMUNICI':'nombre_municipio', u'LOCALIDAD':'localidad', u'NOMLOCALI':'nombre_localidad', u'DOMICILIO':'domicilio', 
 u'DEPADMVA':'depadva', u'DEPNORMTVA':'dependencia_normativa', u'ZONAESCOLA':'zona_escolar', u'SECTOR':'sector', u'DIRSERVREG':'dirservreg', 
-u'SOSTENIMIE':'sosteimiento', u'SERVICIO':'servicio', u'UNIDADRESP':'unidadresp', u'PROGRAMA':'programa', u'SUBPROG':'subprog', u'RENGLON':'renglon',
+u'SOSTENIMIE':'sostenimiento', u'SERVICIO':'servicio', u'UNIDADRESP':'unidadresp', u'PROGRAMA':'programa', u'SUBPROG':'subprog', u'RENGLON':'renglon',
  u'N_RENGLON':'nombre_renglon', u'PERIODO':'periodo', u'MOTIVO':'motivo', u'DISPON':'dispon', u'CONTROL':'control', u'CAPTURA':'captura',
  u'GRUPO3':'3', u'GRUPO2':'2', u'FECHA':'fecha', u'INMUEBLE':'inmueble', u'APDIR2':'segundo_apellido', u'APDIR':'primer_apellido', u'GRUPO4':'4', 
 u'RESPLLENA':'responasable_llenado', u'NOMBREDEP':'nombre', u'NOMBRESOS':'nombre', u'CCTBIBLIO':'clave', u'SUBCONTROL':'subcontrol',
@@ -39,7 +40,8 @@ print len(table.records)
 #exit(0)
 for record in records:
 	q='CREATE VERTEX Plantel CONTENT {'
-	q=q+'"nivel":"'+nivel+'",'
+	q=q+'"nivel":'+str(nivel)+','
+	q=q+'"subnivel":'+str(subnivel)+','
 	#Informacion general
 	for field in info_general:
 		value = record[field]

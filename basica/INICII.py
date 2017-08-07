@@ -4,7 +4,8 @@ import datetime
 import config
 
 client = config.client
-nivel = "inicial"
+nivel = ["inicial"]
+subnivel = []
 table = DBF('INICII16.dbf', load=True, encoding="latin-1")
 #print table.field_names
 #print table.records[0]
@@ -20,7 +21,7 @@ servicio=['SERVICIO']
 renombres = {u'CLAVECCT':'clave', u'N_CLAVECCT':'nombre', u'TURNO':'turno', u'N_ENTIDAD':'nombre_entidad', u'MUNICIPIO':'municipio', 
 u'N_MUNICIPI':'nombre_municipio', u'LOCALIDAD':'localidad', u'N_LOCALIDA':'nombre_localidad', u'DOMICILIO':'domicilio', 
 u'DEPADMVA':'depadva', u'DEPNORMTVA':'dependencia_normativa', u'ZONAESCOLA':'zona_escolar', u'SECTOR':'sector', u'DIRSERVREG':'dirservreg', 
-u'SOSTENIMIE':'sosteimiento', u'SERVICIO':'servicio', u'UNIDADRESP':'unidadresp', u'PROGRAMA':'programa', u'SUBPROG':'subprog', u'RENGLON':'renglon',
+u'SOSTENIMIE':'sostenimiento', u'SERVICIO':'servicio', u'UNIDADRESP':'unidadresp', u'PROGRAMA':'programa', u'SUBPROG':'subprog', u'RENGLON':'renglon',
  u'N_RENGLON':'nombre_renglon', u'PERIODO':'periodo', u'MOTIVO':'motivo', u'DISPON':'dispon'}
 #print len(table.field_names)
 total_f = info_general+turno+ubicacion+sostenimiento+dependencia_normativa+servicio+fields
@@ -31,8 +32,12 @@ records = table.records
 print len(table.records)
 #exit(0)
 for record in records:
+	nivel = ["inicial"]
 	q='CREATE VERTEX Plantel CONTENT {'
-	q=q+'"nivel":"'+nivel+'",'
+	if record['V3'] == "X":
+		nivel.append("ipreescolar")
+	q=q+'"nivel":'+str(nivel)+','
+	q=q+'"subnivel":'+str(subnivel)+','
 	#Informacion general
 	for field in info_general:
 		value = record[field]
@@ -95,7 +100,7 @@ for record in records:
 		elif type(value) == int:
 			q=q+'"%s":%i,'%(field, value)
 		else:
-			print "Data error @:"+rid_plantel
+			error= "Data error @:"+rid_plantel
 	#for field in resultados911:
         #        value = record[field]
         #        if type(value) == unicode:

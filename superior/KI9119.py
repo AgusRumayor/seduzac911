@@ -3,7 +3,8 @@ import re
 import config
 
 client = config.client
-nivel = "superior"
+nivel = ["superior"]
+subnivel = []
 table = DBF('KI9119.dbf', load=True, encoding="latin-1")
 #print table.field_names
 r = re.compile("S\d")
@@ -65,6 +66,8 @@ for record in table.records:
                 else:
                         rid_direccion= responsable_bd[0]._rid
 	q='CREATE VERTEX Plantel CONTENT {'
+	q=q+'"nivel":'+str(nivel)+','
+	q=q+'"subnivel":'+str(subnivel)+','
 	#Informacion general
 	for field in info_general:
 		value = record[field]

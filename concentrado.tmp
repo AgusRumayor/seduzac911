@@ -1,0 +1,34 @@
+import config
+from terminaltables import AsciiTable
+from collections import defaultdict
+
+client = config.client
+
+nested_dict = lambda: defaultdict(nested_dict)
+consultas = nested_dict()
+
+#total escuelas
+consultas['inicial']['escuelas']['total'] = client.query('select count(clave) from Plantel where motivo = "" and nivel = "inicial"',1)[0].count
+preescolar_escuelas_total = client.query('select count(clave) from Plantel where motivo = "" and nivel = "preescolar"',1)[0].count
+primaria_escuelas_total = client.query('select count(clave) from Plantel where motivo = "" and nivel = "primaria"',1)[0].count
+secundaria_escuelas_total = client.query('select count(clave) from Plantel where motivo = "" and nivel = "secundaria"',1)[0].count
+media_escuelas_total = client.query('select count(clave) from Plantel where nivel = "media" and estatus = "ACTIVO"',1)[0].count
+superior_escuelas_total = client.query('SELECT count(clave) FROM Plantel WHERE estatus = "Activa" and nivel = "superior"',1)[0].count
+#aulas existentes
+inicial_aulas_existentes = 0#client.query('select sum(V717) from (select expand(out(Resultado)) from Plantel where motivo = "" and nivel = "inicial")',1)[0].sum
+preescolar_aulas_existentes = client.query('select sum(V534) from (select expand(out(Resultado)) from Plantel where motivo = "" and nivel = "preescolar")',1)[0].sum
+primaria_aulas_existentes = client.query('select sum(V895) from (select expand(out(Resultado)) from Plantel where motivo = "" and nivel = "primaria")',1)[0].sum
+secundaria_aulas_existentes = client.query('select sum(V717) from (select expand(out(Resultado)) from Plantel where motivo = "" and nivel = "secundaria")',1)[0].sum
+media_aulas_existentes = client.query('select sum(MS402) from (select expand(out("Resultado")) from Plantel where nivel = "media" and estatus = "ACTIVO")',1)[0].sum
+superior_aulas_existentes = client.query('SELECT sum(S264) FROM (SELECT expand(out("Resultado")) FROM Plantel WHERE estatus = "Activa" and nivel = "superior")',1)[0].sum
+table_data = [
+    ['Nivel', 'Escuelas', 'Aulas Ex'],
+    ['Inicial', consultas['inicial']['escuelas']['total'], inicial_aulas_existentes],
+    ['Preescolar', preescolar_escuelas_total, preescolar_aulas_existentes],
+    ['Primaria', primaria_escuelas_total, primaria_aulas_existentes],
+    ['Secundaria', secundaria_escuelas_total, secundaria_aulas_existentes],
+    ['Media', media_escuelas_total, media_aulas_existentes],
+    ['Superior', superior_escuelas_total, superior_aulas_existentes],
+]
+table = AsciiTable(table_data)
+print table.table

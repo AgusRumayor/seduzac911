@@ -3,24 +3,13 @@ import re
 import config
 
 client = config.client
-query = client.query("SELECT FROM Institucion")
-
-#for result in query:
-#	print result
  
 table = DBF('KI91110.dbf', load=True, encoding="latin-1")
 #print table.field_names
 r = re.compile("S\d")
 fields = filter(r.match, table.field_names)
 #print fields
-#DELETING ALL RECORDS
-client.command("TRUNCATE CLASS Institucion UNSAFE")
-client.command("TRUNCATE CLASS Empleado UNSAFE")
-client.command("TRUNCATE CLASS Responsable UNSAFE")
-client.command("TRUNCATE CLASS Direccion UNSAFE")
-client.command("TRUNCATE CLASS Resultados911 UNSAFE")
-#DELETING ALL RECORDS
-
+nivel = "superior"
 info_general = ['CLAVEINSTI', 'NOMBREINS', 'ESTATUS', 'MAT_2015', 'DOCEN_2015']
 ubicacion = ['DOMICILIO', 'ENTRE_CAL', 'Y_CALLE', 'COLONIA', 'CODPOST', 'MUNICIPIO', 'NOMBREMUN', 'LOCALIDAD', 'NOMBRELOC']
 contacto =['LADA', 'TELEFONO', 'TEL_EXT', 'FAX', 'FAX_EXT', 'CORREO', 'PAGINA_WEB']
@@ -68,6 +57,7 @@ for record in table.records:
                 else:
                         rid_direccion= responsable_bd[0]._rid
 	q='CREATE VERTEX Institucion CONTENT {'
+	q=q+'"nivel":"'+nivel+'",'
 	#Informacion general
 	for field in info_general:
 		value = record[field]
