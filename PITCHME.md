@@ -6,6 +6,6 @@
 
 Porcentaje de alumos que concluyen oportunamente un nivel educativo de acuerdo al número de años programados
 
-**Formula** `\(ET_{n}=1+(1+x)^2\)`
+**Formula:** `\(ET_{n}=\frac{Eg_{n}}{NI1_{(n-d)}}\)`
 
 ---
