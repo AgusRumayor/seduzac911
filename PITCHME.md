@@ -2,7 +2,10 @@
 
 ---
 
-### Variable 1
-$$\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}$$
+### Eficiencia Terminal
+
+Porcentaje de alumos que concluyen oportunamente un nivel educativo de acuerdo al número de años programados
+
+$$ET_n = \frac{(Eg_n)}{NI1_(n-d)}*100$$
 
 ---
