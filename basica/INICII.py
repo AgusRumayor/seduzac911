@@ -5,10 +5,12 @@ import config
 
 client = config.client
 nivel = ["inicial"]
-subnivel = []
+subnivel = ["general"]
 table = DBF('INICII16.dbf', load=True, encoding="latin-1")
 #print table.field_names
 #print table.records[0]
+#print len(table.records)
+#exit(0)
 r = re.compile("V\d")
 fields = filter(r.match, table.field_names)
 #print fields
