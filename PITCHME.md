@@ -4,7 +4,7 @@
 
 ### Eficiencia Terminal
 
-Porcentaje de alumos que concluyen oportunamente un nivel educativo de acuerdo al número de años programados
+Porcentaje de alumnos que concluyen oportunamente un nivel educativo de acuerdo al número de años programados
 
 **Formula:** `\(ET_{n}=\frac{Eg_{n}}{NI1_{(n-d)}}*100\)`
 
