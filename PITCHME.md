@@ -14,6 +14,6 @@ Porcentaje de alumnos que concluyen oportunamente un nivel educativo de acuerdo 
 
 Porcentaje de alumnos que concluyen oportunamente un nivel educativo de acuerdo al número de años programados
 
-**Formula:** `\DT_n=\left \{ 1-\left ( MT_n_+_1-NI1_n_+_1+Eg_n\over MT_n \right ) \right \}\ast 100\`
+**Formula:** `\(DT_{n}=\left \{ 1-\left ( MT_{n+1}-NI1_{n+1}+Eg_{n}\over MT_{n} \right ) \right \}\ast 100\)`
 
 ---
