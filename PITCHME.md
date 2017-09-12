@@ -24,11 +24,16 @@ Es el porcentaje de alumnos reprobados de un nivel educativo determinado respect
 **Formula:** `\(R = \frac{AR}{Ex}\ast 100\)`
 
 +++
-
-* R: Reprobación.
-* AR: Alumnos reprobados de un nivel educativo determinado.
-* Ex: Alumnos inscritos al final del ciclo escolar del nivel educativo.
-
+### Variables:
+* **R**: Reprobación.
+* **AR**: Alumnos reprobados de un nivel educativo determinado.
+* **Ex**: Alumnos inscritos al final del ciclo escolar del nivel educativo.
+### Datos:
+|    | Base de datos                | Variable                | 2016-2017 |   |
+|----|------------------------------|-------------------------|-----------|---|
+| Ex | 911 - SECCF15, 911 - SECUFN15 | \sum VAR291, \sum VAR291 | 91179     |   |
+| Ex |                              |                         |           |   |
+|    |                              |                         |           |   |
 ---
 
 
