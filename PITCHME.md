@@ -31,8 +31,8 @@ Es el porcentaje de alumnos reprobados de un nivel educativo determinado respect
 ### Datos:
 |    | Base de datos                | Variable                | 2016-2017 |   |
 |----|------------------------------|-------------------------|-----------|---|
-| Ex | 911 - SECCF15, 911 - SECUFN15 | \sum VAR291, \sum VAR291 | 91179     |   |
-| Ex |                              |                         |           |   |
+| Ex | 911 - SECCF15 911 - SECUFN15 | \sum VAR291 \sum VAR291 | 91179     |   |
+|    |                              |                         |           |   |
 |    |                              |                         |           |   |
 ---
 
