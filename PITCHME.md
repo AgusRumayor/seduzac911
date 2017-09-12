@@ -29,7 +29,7 @@ Es el porcentaje de alumnos reprobados de un nivel educativo determinado respect
 * **AR**: Alumnos reprobados de un nivel educativo determinado.
 * **Ex**: Alumnos inscritos al final del ciclo escolar del nivel educativo.
 ### Datos:
-Ex -> [911.6](http://google.com) -> [SECCF15/VAR291](http://httpbin.org) -> `\(\sum = VAR291\)`
+Ex -> [911.6](http://google.com) -> [SECCF15/VAR291](http://httpbin.org) -> `\(\sum VAR291\)`
 ---
 
 
