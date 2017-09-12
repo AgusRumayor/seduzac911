@@ -17,3 +17,13 @@ Porcentaje de alumnos que concluyen oportunamente un nivel educativo de acuerdo 
 **Formula:** `\(DT_{n}=\left \{ 1-\left ( MT_{n+1}-NI1_{n+1}+Eg_{n}\over MT_{n} \right ) \right \}\ast 100\)`
 
 ---
+
+### Reprobación
+Es el porcentaje de alumnos reprobados de un nivel educativo determinado respecto a los alumnos  inscritos al final del ciclo escolar (existencia) del nivel educativo.
+
+**Formula:** `\(R = \frac{AR}{Ex}\ast 100\)`
+R: Reprobación.
+AR: Alumnos reprobados de un nivel educativo determinado.
+Ex: Alumnos inscritos al final del ciclo escolar del nivel educativo.
+
+
