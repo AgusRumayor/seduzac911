@@ -22,8 +22,13 @@ Porcentaje de alumnos que concluyen oportunamente un nivel educativo de acuerdo 
 Es el porcentaje de alumnos reprobados de un nivel educativo determinado respecto a los alumnos  inscritos al final del ciclo escolar (existencia) del nivel educativo.
 
 **Formula:** `\(R = \frac{AR}{Ex}\ast 100\)`
+
++++
+
 * R: Reprobación.
 * AR: Alumnos reprobados de un nivel educativo determinado.
 * Ex: Alumnos inscritos al final del ciclo escolar del nivel educativo.
+
+---
 
 
