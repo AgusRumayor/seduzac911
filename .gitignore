@@ -99,7 +99,7 @@ ENV/
 .mypy_cache/
 
 # original db
-*.dbf
+#*.dbf
 
 #db connection
 config.py
